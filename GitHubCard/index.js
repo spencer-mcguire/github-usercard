@@ -44,11 +44,11 @@ followersArray.forEach(user => {
       // console.log(results);
       const newCard = cardCreator(results.data)
       entry.appendChild(newCard)
-  });
+  })
+      .catch(error => {
+        console.log('data was not returned', error);
+      })
 });
-.catch(err => {
-  console.log('data was not returned', err);
-})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -78,7 +78,7 @@ function cardCreator(arg){
   const userName = document.createElement('p');
   const location = document.createElement('p');
   const profile = document.createElement('p');
-  const proLink = document.createElement('a');
+  const link = document.createElement('a');
   const followers = document.createElement('p');
   const following = document.createElement('p');
   const bio = document.createElement('p');
@@ -86,8 +86,8 @@ function cardCreator(arg){
   // class 
   card.classList.add('card');
   infoContainer.classList.add('card-info');
-  name.classList.add('name')
-  userName.classList.add('username')
+  name.classList.add('name');
+  userName.classList.add('username');
   // structure
   card.appendChild(userImg);
   card.appendChild(infoContainer);
@@ -95,19 +95,19 @@ function cardCreator(arg){
   infoContainer.appendChild(userName);
   infoContainer.appendChild(location);
   infoContainer.appendChild(profile);
-  profile.append(proLink);
   infoContainer.appendChild(followers);
   infoContainer.appendChild(following);
   infoContainer.appendChild(bio);
-
+  
   // content
   userImg.src = arg.avatar_url;
   name.textContent = arg.name;
   userName.textContent = arg.login;
-  location.textContent = `Location: ${arg.location}`;
-  profile.textContent = `Profile:`; 
-  // proLink.href = arg.html_url;
-  proLink.textContent = arg.html_url;
+  location.textContent = `Location: ${arg.location}`; 
+  profile.innerHTML = `Profile: `;
+  profile.appendChild(link);
+  link.href = arg.html_url;
+  link.textContent =  arg.html_url;
   followers.textContent = `Followers: ${arg.followers}`;
   following.textContent = `Following: ${arg.following}`;
   bio.textContent = `Bio: ${arg.bio}`;
